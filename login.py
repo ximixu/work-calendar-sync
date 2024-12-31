@@ -24,44 +24,42 @@ options.add_argument("--disable-gpu")
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
 
-driver = webdriver.Chrome(options=options)
+def get_authenticated_driver():
+    driver = webdriver.Chrome(options=options)
 
-try:
-    # Navigate to the login page
-    driver.get(login_url)
+    try:
+        # Navigate to the login page
+        driver.get(login_url)
 
-    # Wait for the redirection to the proper URL
-    WebDriverWait(driver, 20).until(EC.url_changes(login_url))
+        # Wait for the redirection to the proper URL
+        WebDriverWait(driver, 20).until(EC.url_changes(login_url))
 
-    # Wait for the username field to become available
-    username_field = WebDriverWait(driver, 20).until(
-        EC.presence_of_element_located((By.ID, username_field_id))
-    )
+        # Wait for the username field to become available
+        username_field = WebDriverWait(driver, 20).until(
+            EC.presence_of_element_located((By.ID, username_field_id))
+        )
 
-    # Enter username
-    username_field.send_keys(username)
-    username_field.send_keys(Keys.RETURN)
+        # Enter username
+        username_field.send_keys(username)
+        username_field.send_keys(Keys.RETURN)
 
-    # Wait for the password field to become available
-    password_field = WebDriverWait(driver, 20).until(
-        EC.presence_of_element_located((By.ID, password_field_id))
-    )
+        # Wait for the password field to become available
+        password_field = WebDriverWait(driver, 20).until(
+            EC.presence_of_element_located((By.ID, password_field_id))
+        )
 
-    # Locate and fill in the password field
-    password_field.send_keys(password)
-    password_field.send_keys(Keys.RETURN)
+        # Locate and fill in the password field
+        password_field.send_keys(password)
+        password_field.send_keys(Keys.RETURN)
 
-    # Wait for successful login and redirection
-    WebDriverWait(driver, 20).until(
-        EC.presence_of_element_located((By.ID, success_indicator_id))
-    )
+        # Wait for successful login and redirection
+        WebDriverWait(driver, 20).until(
+            EC.presence_of_element_located((By.ID, success_indicator_id))
+        )
 
-    # Get cookies
-    cookies = driver.get_cookies()
-    print("Cookies:")
-    for cookie in cookies:
-        print(cookie)
+        # Return the authenticated driver
+        return driver
 
-finally:
-    # Close the browser
-    driver.quit()
+    except Exception as e:
+        driver.quit()
+        raise e

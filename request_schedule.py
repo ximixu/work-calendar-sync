@@ -1,7 +1,7 @@
 import requests
 import json
 
-def get_schedule_xml(cookies):
+def get_schedule_xml(driver):
     # Load configuration from a config file
 
     config_file = "config.json"  # MAKE SURE THIS IS IN GITIGNORE
@@ -10,6 +10,7 @@ def get_schedule_xml(cookies):
 
     request_url = config["request_url"]
     request_data = config["request_data"]
+
     session = requests.Session()
     for cookie in cookies:
         session.cookies.set(cookie['name'], cookie['value'])
