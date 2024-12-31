@@ -34,10 +34,10 @@ def convert(json_file):
         cal.add_component(event)
 
     # Write the .ics file
-    with open("regular_shifts_schedule.ics", "wb") as f:
+    with open("schedule.ics", "wb") as f:
         f.write(cal.to_ical())
 
-    print("ICS file created: regular_shifts_schedule.ics")
+    print("ICS file created: schedule.ics")
 
 if __name__ == "__main__":
     convert("schedule.json")
