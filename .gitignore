@@ -1,3 +1,5 @@
 config.json
 schedule.json
 schedule.ics
+.DS_Store
+__pycache__
