@@ -20,10 +20,10 @@ schedule_link_id = config["schedule_link_id"]
 target_url = config["target_url"]
 
 options = webdriver.ChromeOptions()
-# options.add_argument("--headless")
-# options.add_argument("--disable-gpu")
-# options.add_argument("--no-sandbox")
-# options.add_argument("--disable-dev-shm-usage")
+options.add_argument("--headless")
+options.add_argument("--disable-gpu")
+options.add_argument("--no-sandbox")
+options.add_argument("--disable-dev-shm-usage")
 
 def get_schedule():
     driver = webdriver.Chrome(options=options)
