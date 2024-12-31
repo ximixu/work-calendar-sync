@@ -1,4 +1,4 @@
-import requests
+from seleniumrequests import Chrome
 import json
 
 def get_schedule_xml(driver):
@@ -10,12 +10,8 @@ def get_schedule_xml(driver):
 
     request_url = config["request_url"]
     request_data = config["request_data"]
-
-    session = requests.Session()
-    for cookie in cookies:
-        session.cookies.set(cookie['name'], cookie['value'])
     
-    response = session.post(request_url, data=request_data)
+    response = driver.request('POST', request_url, json = request_data)
     if response.status_code == 200:
         return response.text
     else:
