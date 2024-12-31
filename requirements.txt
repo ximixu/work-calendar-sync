@@ -1,0 +1,4 @@
+icalendar==6.1.0
+pytz==2024.1
+selenium==4.27.1
+selenium_wire==5.1.0
