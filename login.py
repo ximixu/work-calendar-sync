@@ -52,8 +52,6 @@ def get_schedule():
         schedule_request = driver.wait_for_request(target_url, 60)
         schedule = gzip.decompress(schedule_request.response.body)
         schedule_json = json.loads(schedule.decode('utf-8'))
-
-        print(schedule_json)
         
         with open('schedule.json', 'w') as file:
             json.dump(schedule_json, file, indent=4)
