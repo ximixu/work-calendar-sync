@@ -1,5 +1,5 @@
 from icalendar import Calendar, Event
-from datetime import datetime
+from datetime import datetime, timezone
 import pytz
 import json
 
@@ -13,6 +13,10 @@ def convert(json_file):
     # Assuming JSON uses local time without timezone info
     local_timezone = pytz.timezone("US/Pacific")
     cal = Calendar()
+    cal.add('prodid', '-//ximixu//schedule-to-ics//EN')
+    cal.add('version', '2.0')
+
+    id = 0
 
     for shift in regular_shifts:
         # Parse local times from JSON
@@ -25,6 +29,8 @@ def convert(json_file):
         
         # Create an event
         event = Event()
+        event.add('uid', 'shift' + str(id))
+        event.add('dtstamp', datetime.now(timezone.utc))
         event.add('summary', "Work Shift")
         event.add('dtstart', start_utc)  # UTC format
         event.add('dtend', end_utc)  # UTC format
@@ -32,6 +38,8 @@ def convert(json_file):
         event.add('location', "Workplace")
         
         cal.add_component(event)
+
+        id += 1
 
     # Write the .ics file
     with open("schedule.ics", "wb") as f:
