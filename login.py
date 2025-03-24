@@ -5,9 +5,13 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import json
 import gzip
+import os
 
 # Load configuration from a config file
-config_file = "config.json"  # MAKE SURE THIS IS IN GITIGNORE
+base_dir = os.path.dirname(os.path.abspath(__file__))
+config_filename = "config.json"  # MAKE SURE THIS IS IN GITIGNORE
+config_file = os.path.join(base_dir, config_filename)
+
 with open(config_file, "r") as file:
     config = json.load(file)
 
@@ -53,7 +57,8 @@ def get_schedule():
         schedule = gzip.decompress(schedule_request.response.body)
         schedule_json = json.loads(schedule.decode('utf-8'))
         
-        with open('schedule.json', 'w') as file:
+        schedule_path = os.path.join(base_dir, 'schedule.json')
+        with open(schedule_path, 'w') as file:
             json.dump(schedule_json, file, indent=4)
 
         driver.quit()

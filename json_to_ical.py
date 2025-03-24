@@ -2,6 +2,7 @@ from icalendar import Calendar, Event
 from datetime import datetime, timezone
 import pytz
 import json
+import os
 
 def convert(json_file):
     # Load the JSON schedule
@@ -42,10 +43,12 @@ def convert(json_file):
         id += 1
 
     # Write the .ics file
-    with open("schedule.ics", "wb") as f:
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    ics_path = os.path.join(base_dir, "schedule.ics")
+    with open(ics_path, "wb") as f:
         f.write(cal.to_ical())
 
-    print("ICS file created: schedule.ics")
+    print(f"ICS file created: {ics_path}")
 
 if __name__ == "__main__":
     convert("schedule.json")
