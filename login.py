@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import json
 import gzip
 import os
+import tempfile
 
 # Load configuration from a config file
 base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -22,12 +23,14 @@ username_field_id = config["username_field_id"]
 password_field_id = config["password_field_id"]
 schedule_link_id = config["schedule_link_id"]
 target_url = config["target_url"]
+temp_user_data_dir = tempfile.mkdtemp()
 
 options = webdriver.ChromeOptions()
 options.add_argument("--headless")
 options.add_argument("--disable-gpu")
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
+options.add_argument(f"--user-data-dir={temp_user_data_dir}")
 
 def get_schedule():
     driver = webdriver.Chrome(options=options)
